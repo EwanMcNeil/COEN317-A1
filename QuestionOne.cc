@@ -24,6 +24,8 @@ loop:
 #include <iostream>
 using namespace std;
 
+
+#define DELAY_SECOND 10000
 void delay();
 
 int main()
@@ -68,6 +70,6 @@ while(true){
 //so it has been defined outside of the main for reusablilty 
 void delay(){
 
-
+for (int delay = 0; delay <DELAY_SECOND; delay ++);
 
 }
