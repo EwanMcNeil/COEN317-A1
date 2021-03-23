@@ -46,14 +46,17 @@ if(timerStatus != XST_SUCESSS){
     return -1;
 }
 
+
+
 //set the reset values for the timer
 //25000 = 3D090
+
 XtmrCtr_SetResetValue(&timerInstance,3D090,0);
 
 
 
 //Specifcications ask for a count up timer
-XtmrCtr_SetOptions(&timerInstance,XPAR_AXI_TIMER_0_DEVICE_ID, XTC_COUNT_UP_OPTION);
+XtmrCtr_SetOptions(&timerInstance,XPAR_AXI_TIMER_0_DEVICE_ID, XTC_COUNT_DOWN_OPTION);
 
 
 //TODO check what the zero is for
