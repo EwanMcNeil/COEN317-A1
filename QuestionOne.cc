@@ -25,7 +25,7 @@ loop:
 using namespace std;
 
 
-#define DELAY_SECOND 10000
+#define DELAY_SECOND 10000  //time for a single second
 void delay();
 
 int main()
@@ -48,7 +48,7 @@ if(ledStatus != XST_SUCESSS){
 //setting one for output, and channel = 0
 XGpio_setDataDirection(&GPIO_PTR_LED,1,0);
 
-
+//TODO check bus width
 bool greenON[2] = {1,0};
 bool redON[2] = {0,1};
 
