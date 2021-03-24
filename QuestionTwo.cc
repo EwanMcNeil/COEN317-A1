@@ -1,6 +1,6 @@
-//Assignment Two 
+//Assignment Two
 //Ewan McNeil 40021787
-//Luca Tomassi 
+//Luca Tomassi
 
 /*
 Question Two reqs
@@ -22,7 +22,7 @@ a) find the requiried configuration Mode and TCSR to generate a periodic signal 
 #include "xil_types.h"
 #include "xgpio.h"
 #include "xil_io.h"
-#include "xil_execption.h"
+#include "xil_exception.h"
 #include "xtmrctr.h"
 #include <iostream>
 
@@ -31,35 +31,64 @@ using namespace std;
 
 
 int main(){
-//only need one pointer, LEDs are on same channel
-static XGpio GPIO_PTR_LED;    
-XtmrCtr timerInstance;
 
-int timerStatus
+XtmrCtr timerInstancePointer;
+
+u32* timer_register_ptr = (u32*)XPAR_TMRCTR_0_BASEADDR;
 
 
+int timerStatus;
 //device ID is found in the parameters header file
-timerStatus = XtmrCtr_initalized(&GPIO_PTR_LED, XPAR_AXI_TIMER_0_DEVICE_ID);   
+timerStatus = XtmrCtr_initalized(&GPIO_PTR_LED, XPAR_AXI_TIMER_0_DEVICE_ID);
 if(timerStatus != XST_SUCESSS){
 
     cout << "initalization of the Timer has FAILED" << endl;
     return -1;
 }
 
-//set the reset values for the timer
-//25000 = 3D090
-XtmrCtr_SetResetValue(&timerInstance,3D090,0);
+//CASC = 0
+//ENALL = 0
+//PWMA0 = 0
+//TOINT = 1
+//ENTO = 1 		//enable timer
+//ENIT0 = 0 	//disable the interupt
+//LOAD0 = 1 	//equals one to start and then needs to be deasserted
+//ARHT = 1		//reload generate value or overwrite capture value
+//CAPTO = 0
+//GENT0 = 1
+//UDTO = 0		//counting up equals zero
+//MDTO = 0
+
+//yeilds
+//0001_1011_0100
+//1B4
+
+
+//0001_1011_0100
+//1B4
+
+
+//then after the reset it is
+//0001_1001_0100
+//194
+
+
+//reset values is
+//FFFC2F71
 
 
 
-//Specifcications ask for a count up timer
-XtmrCtr_SetOptions(&timerInstance,XPAR_AXI_TIMER_0_DEVICE_ID, XTC_COUNT_UP_OPTION);
+//Writing the reset value to the TLRO
+*(timer_register_ptr+1) = 0xFFFC2F71;
 
 
-//TODO check what the zero is for
-XtmrCtr_Start(&timerInstance,0);
+//write first config value to load value
+*(timer_register_ptr) = 0x1B4;
 
+//write second to start timer
+*(timer_register_ptr) = 0x194;
 
+	return 0;
 }
 
 
