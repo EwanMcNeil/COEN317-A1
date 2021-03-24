@@ -49,7 +49,7 @@ if(timerStatus != XST_SUCESSS){
 //CASC = 0
 //ENALL = 0
 //PWMA0 = 0
-//TOINT = 1
+//TOINT = 0
 //ENTO = 1 		//enable timer
 //ENIT0 = 0 	//disable the interupt
 //LOAD0 = 1 	//equals one to start and then needs to be deasserted
@@ -60,17 +60,14 @@ if(timerStatus != XST_SUCESSS){
 //MDTO = 0
 
 //yeilds
-//0001_1011_0100
-//1B4
+//0000_1011_0100
+//0B4
 
-
-//0001_1011_0100
-//1B4
 
 
 //then after the reset it is
-//0001_1001_0100
-//194
+//0000_1001_0100
+//094
 
 
 //reset values is
